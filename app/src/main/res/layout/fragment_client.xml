@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="Fragments.ClientFragment">
+    <RelativeLayout
+        android:id="@+id/clientFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/toServerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:hint="@string/toserevertext"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:layout_width="32dp"
+            android:id="@+id/SendButton"
+            android:layout_height="32dp"
+            android:layout_alignBaseline="@id/toServerText"
+            android:background="@mipmap/send_icon"
+            android:layout_toEndOf="@id/toServerText"
+            android:layout_marginTop="40dp" />
+    </RelativeLayout>
+
+
+
+</FrameLayout>
