@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager.widget.ViewPager
-import com.pusher.client.Pusher
-import com.pusher.client.PusherOptions
-import com.pusher.client.channel.Channel
-import com.pusher.client.channel.SubscriptionEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.Socket
 
@@ -22,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.view_pager)
 
         viewPager.adapter = viewPagerAdapter(supportFragmentManager)
-
 
 
 

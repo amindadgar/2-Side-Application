@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.amindadgar.a2sideapp.R
 import kotlinx.android.synthetic.main.fragment_client.*
+import org.jetbrains.anko.doAsync
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -53,21 +54,23 @@ class ClientFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_client, container, false)
     }
     fun connection(ip:String){
+        doAsync {
+            val host = ip
+            val port = 6789
+            val clientSocket: Socket = Socket(host, port)
+            val inFromServer: BufferedReader =
+                BufferedReader(InputStreamReader(clientSocket.getInputStream()))
+            val outToServer: DataOutputStream = DataOutputStream(clientSocket.getOutputStream())
 
-        val host = ip
-        val port = 6789
-        val clientSocket: Socket = Socket(host,port)
-        val inFromServer:BufferedReader = BufferedReader(InputStreamReader(clientSocket.getInputStream()))
-        val outToServer: DataOutputStream = DataOutputStream(clientSocket.getOutputStream())
+            SendButton.setOnClickListener {
+                outToServer.writeBytes(toServerText.text.toString())
+            }
+            val fromServerText: String = inFromServer.readLine()
+            if (fromServerText != "")
+                Toast.makeText(context, fromServerText, Toast.LENGTH_LONG).show()
 
-        SendButton.setOnClickListener {
-            outToServer.writeBytes(toServerText.text.toString())
+            clientSocket.close()
         }
-        val fromServerText:String = inFromServer.readLine()
-        if (fromServerText != "")
-            Toast.makeText(context,fromServerText,Toast.LENGTH_LONG).show()
-
-        clientSocket.close()
     }
 
 }
