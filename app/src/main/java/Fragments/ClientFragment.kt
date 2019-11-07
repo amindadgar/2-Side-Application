@@ -26,12 +26,13 @@ class ClientFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val SendButton = view!!.findViewById<Button>(R.id.SendButton)
+        val layout = inflater.inflate(R.layout.fragment_client, container, false)
+        val SendButton = layout.findViewById<Button>(R.id.SendButton)
         Toast.makeText(activity,"in Client",Toast.LENGTH_LONG).show()
 
         val dialogBuilder = AlertDialog.Builder(activity)
-        val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.dialog_layout, null)
+        val inflater1 = this.layoutInflater
+        val dialogView = inflater1.inflate(R.layout.dialog_layout, null)
         dialogBuilder.setView(dialogView)
 
         val editText = dialogView.findViewById<EditText>(R.id.dialog_text)
@@ -40,7 +41,7 @@ class ClientFragment : Fragment() {
         dialogBuilder.setPositiveButton("Save", { _ , _ ->
             ip = editText.text.toString()
             if (ip!=null){
-                connection(ip!!)
+                connection(ip!!,SendButton)
             }
             Toast.makeText(activity,"ip: $ip",Toast.LENGTH_LONG).show()
 
@@ -48,12 +49,9 @@ class ClientFragment : Fragment() {
         val b = dialogBuilder.create()
         b.show()
 
-
-
-
-        return inflater.inflate(R.layout.fragment_client, container, false)
+        return layout
     }
-    fun connection(ip:String){
+    fun connection(ip:String,sendB:Button){
         doAsync {
             val host = ip
             val port = 6789
@@ -62,7 +60,8 @@ class ClientFragment : Fragment() {
                 BufferedReader(InputStreamReader(clientSocket.getInputStream()))
             val outToServer: DataOutputStream = DataOutputStream(clientSocket.getOutputStream())
 
-            SendButton.setOnClickListener {
+            sendB.setOnClickListener {
+                val toast = Toast.makeText(activity,"Sending To server",Toast.LENGTH_LONG).show()
                 outToServer.writeBytes(toServerText.text.toString())
             }
             val fromServerText: String = inFromServer.readLine()

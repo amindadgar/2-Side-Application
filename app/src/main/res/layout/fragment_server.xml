@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     tools:context="Fragments.ServerFragment">
 
-   <androidx.appcompat.widget.AppCompatImageView
-       android:layout_width="250dp"
+   <TextView
+       android:id="@+id/serverText"
+       android:layout_marginTop="60dp"
        android:layout_gravity="center_horizontal"
-       android:layout_marginTop="25dp"
-       android:src="@android:drawable/checkbox_on_background"
-       android:layout_height="250dp"/>
+       android:layout_width="205dp"
+       android:layout_height="40dp"/>
 
 </FrameLayout>

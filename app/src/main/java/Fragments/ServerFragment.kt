@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.amindadgar.a2sideapp.R
+import kotlinx.android.synthetic.main.fragment_server.*
 import org.jetbrains.anko.doAsync
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -39,6 +40,7 @@ class ServerFragment : Fragment() {
                 val outToClient = DataOutputStream(ConnectionSocket.getOutputStream())
                 clientSentence = inFromClient.readLine()
                 clientSentence = clientSentence.toUpperCase() + "\n"
+                serverText.text = clientSentence + "\n Sending Uppercase to Client ..."
                 outToClient.writeBytes(clientSentence)
             }
         }
