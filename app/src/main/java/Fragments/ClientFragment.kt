@@ -28,7 +28,7 @@ class ClientFragment : Fragment() {
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_client, container, false)
         val SendButton = layout.findViewById<Button>(R.id.SendButton)
-        Toast.makeText(activity,"in Client",Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity,"in Client",Toast.LENGTH_LONG).show()
 
         val dialogBuilder = AlertDialog.Builder(activity)
         val inflater1 = this.layoutInflater

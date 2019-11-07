@@ -15,20 +15,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="75dp"
             android:ems="10"
+            android:layout_alignParentTop="true"
             android:hint="@string/toserevertext"
             android:inputType="textPersonName" />
 
         <Button
-            android:layout_width="wrap_content"
             android:id="@+id/SendButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/toServerText"
-            android:text="Send"
-            android:layout_marginRight="25dp"
-            android:layout_toEndOf="@id/toServerText"
-            android:layout_marginTop="40dp" />
+            android:layout_alignTop="@id/toServerText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:text="Send" />
     </RelativeLayout>
 
 
