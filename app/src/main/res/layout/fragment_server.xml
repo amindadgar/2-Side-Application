@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     tools:context="Fragments.ServerFragment">
 
+
    <TextView
        android:id="@+id/serverText"
        android:layout_marginTop="60dp"
        android:layout_gravity="center_horizontal"
        android:layout_width="205dp"
-       android:layout_height="40dp"/>
+       android:layout_height="200dp"/>
 
 </FrameLayout>

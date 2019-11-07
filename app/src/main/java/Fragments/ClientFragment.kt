@@ -61,14 +61,17 @@ class ClientFragment : Fragment() {
             val outToServer: DataOutputStream = DataOutputStream(clientSocket.getOutputStream())
 
             sendB.setOnClickListener {
-                val toast = Toast.makeText(activity,"Sending To server",Toast.LENGTH_LONG).show()
-                outToServer.writeBytes(toServerText.text.toString())
+                Toast.makeText(activity,"Sending To server",Toast.LENGTH_LONG).show()
+                doAsync {
+                    outToServer.writeBytes(toServerText.text.toString())
+                }
+
             }
             val fromServerText: String = inFromServer.readLine()
             if (fromServerText != "")
                 Toast.makeText(context, fromServerText, Toast.LENGTH_LONG).show()
 
-            clientSocket.close()
+//            clientSocket.close()
         }
     }
 

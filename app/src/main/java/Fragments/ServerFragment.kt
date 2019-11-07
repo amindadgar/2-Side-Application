@@ -2,15 +2,19 @@ package Fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.amindadgar.a2sideapp.R
 import kotlinx.android.synthetic.main.fragment_server.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
+import org.jetbrains.anko.uiThread
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -27,6 +31,8 @@ class ServerFragment : Fragment() {
 
         val layout = inflater.inflate(R.layout.fragment_server, container, false)
         val text = layout.findViewById<TextView>(R.id.serverText)
+
+
         Connction(text)
 
 
@@ -34,9 +40,9 @@ class ServerFragment : Fragment() {
     }
     fun Connction(Text:TextView){
         doAsync {
-            var clientSentence:String?=null
-            val WelcomSocket= ServerSocket(6789)
-            val ConnectionSocket:Socket = WelcomSocket.accept()
+            var clientSentence: String? = null
+            val WelcomSocket = ServerSocket(6789)
+            val ConnectionSocket: Socket = WelcomSocket.accept()
             while (true) {
                 val inFromClient: BufferedReader =
                     BufferedReader(InputStreamReader(ConnectionSocket.getInputStream()))
@@ -44,8 +50,12 @@ class ServerFragment : Fragment() {
                 val outToClient = DataOutputStream(ConnectionSocket.getOutputStream())
                 clientSentence = inFromClient.readLine()
                 clientSentence = clientSentence.toUpperCase() + "\n"
-                Text.text = clientSentence + "\n Sending Uppercase to Client ..."
+                uiThread {
+                    Text.text = clientSentence + "\n Sending Uppercase to Client ..."
+                }
                 outToClient.writeBytes(clientSentence)
+
+                Log.d("inSerever", "inLoop")
             }
         }
     }
