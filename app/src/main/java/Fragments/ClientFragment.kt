@@ -31,7 +31,7 @@ class ClientFragment : Fragment() {
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_client, container, false)
         val SendButton = layout.findViewById<Button>(R.id.SendButton)
-//        Toast.makeText(activity,"in Client",Toast.LENGTH_LONG).show()
+
 
         val dialogBuilder = AlertDialog.Builder(activity)
         val inflater1 = this.layoutInflater
@@ -40,12 +40,10 @@ class ClientFragment : Fragment() {
 
         val editText = dialogView.findViewById<EditText>(R.id.dialog_text)
         var ip:String?=null
-        dialogBuilder.setTitle("Enter other side ip")
+        dialogBuilder.setTitle("Enter Your Server IP")
         dialogBuilder.setPositiveButton("Save", { _ , _ ->
             ip = editText.text.toString()
-//            if (ip!=null){
-//                connection(ip!!,SendButton)
-//            }
+
             Toast.makeText(activity,"ip: $ip",Toast.LENGTH_LONG).show()
         })
         SendButton.setOnClickListener {
