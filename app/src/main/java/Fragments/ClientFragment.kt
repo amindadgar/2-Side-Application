@@ -15,9 +15,12 @@ import android.widget.Toast
 import com.amindadgar.a2sideapp.R
 import kotlinx.android.synthetic.main.fragment_client.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.uiThread
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.net.Socket
 
 class ClientFragment : Fragment() {
@@ -40,39 +43,43 @@ class ClientFragment : Fragment() {
         dialogBuilder.setTitle("Enter other side ip")
         dialogBuilder.setPositiveButton("Save", { _ , _ ->
             ip = editText.text.toString()
-            if (ip!=null){
-                connection(ip!!,SendButton)
-            }
+//            if (ip!=null){
+//                connection(ip!!,SendButton)
+//            }
             Toast.makeText(activity,"ip: $ip",Toast.LENGTH_LONG).show()
-
         })
+        SendButton.setOnClickListener {
+            connection(ip!!)
+            toast("Sending to server")
+        }
+
+
         val b = dialogBuilder.create()
         b.show()
 
         return layout
     }
-    fun connection(ip:String,sendB:Button){
+    fun connection(ip:String){
         doAsync {
             val host = ip
-            val port = 6789
+            val port = 6785
             val clientSocket: Socket = Socket(host, port)
             val inFromServer: BufferedReader =
                 BufferedReader(InputStreamReader(clientSocket.getInputStream()))
-            val outToServer: DataOutputStream = DataOutputStream(clientSocket.getOutputStream())
+            val outToServer: DataOutputStream =
+                DataOutputStream(clientSocket.getOutputStream())
 
-            sendB.setOnClickListener {
-                Toast.makeText(activity,"Sending To server",Toast.LENGTH_LONG).show()
-                doAsync {
-                    outToServer.writeBytes(toServerText.text.toString())
-                }
+            outToServer.writeBytes(toServerText.text.toString())
+            outToServer.flush()
 
-            }
             val fromServerText: String = inFromServer.readLine()
             if (fromServerText != "")
-                Toast.makeText(context, fromServerText, Toast.LENGTH_LONG).show()
-
-//            clientSocket.close()
+                uiThread {
+                    Toast.makeText(context, fromServerText, Toast.LENGTH_LONG).show()
+                }
         }
+//            clientSocket.close()
+
     }
 
 }
