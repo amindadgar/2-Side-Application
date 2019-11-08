@@ -12,6 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.amindadgar.a2sideapp.R
 import kotlinx.android.synthetic.main.fragment_server.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.uiThread
@@ -32,14 +35,18 @@ class ServerFragment : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_server, container, false)
         val text = layout.findViewById<TextView>(R.id.serverText)
 
-
-        Connction(text)
+        GlobalScope.launch {
+            Connction(text)
+            kotlinx.coroutines.delay(1000)
+        }
 
 
         return layout
     }
     fun Connction(Text:TextView){
-        doAsync {
+
+//        doAsync {
+
             var clientSentence: String? = null
             val WelcomSocket = ServerSocket(6789)
             val ConnectionSocket: Socket = WelcomSocket.accept()
@@ -50,14 +57,14 @@ class ServerFragment : Fragment() {
                 val outToClient = DataOutputStream(ConnectionSocket.getOutputStream())
                 clientSentence = inFromClient.readLine()
                 clientSentence = clientSentence.toUpperCase() + "\n"
-                uiThread {
-                    Text.text = clientSentence + "\n Sending Uppercase to Client ..."
-                }
+
+                Text.text = clientSentence + "\n Sending Uppercase to Client ..."
+
                 outToClient.writeBytes(clientSentence)
 
                 Log.d("inSerever", "inLoop")
             }
-        }
+//        }
     }
 
 
